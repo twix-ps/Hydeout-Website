@@ -1,5 +1,5 @@
 "use client"
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, Suspense} from "react";
 import Payments from "./components/ui/Payments";
 import SidePanel from "./components/ui/SidePanel";
 import {SessionProvider} from 'next-auth/react'
@@ -26,11 +26,22 @@ function Page() {
     </div>
   );
 }
+
+function Loading() {
+  return (
+      <div className="w-screen h-screen flex items-center justify-center">
+        <div className="w-16 h-16 border-t-2 border-b-2 border-purple-500 rounded-full animate-spin"></div>
+      </div>
+  )
+}
+
 export default function Home() {
 
   return (
     <SessionProvider>
-      <Page/>
+      <Suspense fallback={<Loading />}>
+        <Page/>
+      </Suspense>
     </SessionProvider>
 
   );
