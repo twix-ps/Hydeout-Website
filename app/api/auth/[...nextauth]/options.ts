@@ -12,7 +12,7 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({session, token, user, }) {
+    async session({session, token}) {
       if (token) {
         if (token?.picture?.includes("discord")) {
           session.user.id = token.sub || "";
