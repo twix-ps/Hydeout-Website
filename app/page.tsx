@@ -12,8 +12,6 @@ import Leaderboard from "./components/ui/Leaderboard";
 
 
 function Page() {
-  const { data: session } = useSession();
-  const currentPath = usePathname();
   const urlParams = useSearchParams();
 
   return (

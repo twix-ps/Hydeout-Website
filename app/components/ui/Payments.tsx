@@ -2,6 +2,7 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
+import AlertDestructive from "./AlertDestructive";
 
 const API_URL = "http://127.0.0.1:5000/payments";
 
@@ -25,6 +26,7 @@ export async function fetchPayments(options: { pageNumber: number, amount: numbe
   const response = await fetch(`${API_URL}?amount=${amount}&page=${pageNumber}`);
   if (!response.ok) {
     throw new Error("Failed to fetch payments");
+    return []
   }
 
   const data: Payment[] = await response.json();
@@ -61,10 +63,20 @@ interface Payment {
 export default function PaymentsList({ paymentsData }: PaymentsProps) {
     const [payments, setPayments] = useState<Payment[]>(paymentsData);
     const [page, setPage] = useState<number>(1);
+    const [error, setError] = useState<string>("");
 
     const handleFetchPayments = async (pageNumber: number) => {
-      const response = await fetchPayments({ pageNumber, amount: 10 });
-      setPayments(response);
+      try {
+        const response = await fetchPayments({ pageNumber, amount: 10 });
+        if (!response || response.length === 0) {
+          throw new Error("No payments found");
+        }
+        setPayments(response);
+        setError("");
+      } catch (error) {
+        console.error("Failed to fetch payments:", error);
+        setError("Failed to fetch payments");
+      }
     };
 
     const handleNextPage = () => {
@@ -106,6 +118,7 @@ export default function PaymentsList({ paymentsData }: PaymentsProps) {
             </li>
           ))}
         </ul>
+        {error && <AlertDestructive title="Error" description={error + ", Perchance the API is down? ask ihyd"} />}
       </div>
     );
   }
