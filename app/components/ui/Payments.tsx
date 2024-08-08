@@ -4,9 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import AlertDestructive from "./AlertDestructive";
 
-const API_URL = "http://127.0.0.1:5000/payments";
-
-
 interface PaymentsProps {
   pageNumber: number;
   amount: number;
@@ -23,7 +20,7 @@ interface PaymentsProps {
 export async function fetchPayments(options: { pageNumber: number, amount: number }): Promise<Payment[]> {
   const { pageNumber, amount } = options;
 
-  const response = await fetch(`${API_URL}?amount=${amount}&page=${pageNumber}`);
+  const response = await fetch(`/api/payments?amount=${amount}&page=${pageNumber}`, { method: 'GET' });
   if (!response.ok) {
     throw new Error("Failed to fetch payments");
     return []

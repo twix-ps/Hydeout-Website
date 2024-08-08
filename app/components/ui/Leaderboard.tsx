@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 
 const getPlayers = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:5000/users");
+        const response = await fetch("/api/users", { method: "GET" });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
