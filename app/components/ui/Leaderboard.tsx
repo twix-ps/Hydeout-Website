@@ -1,3 +1,4 @@
+"use client"
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "@/components/ui/table";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
@@ -7,6 +8,7 @@ import { useState, useMemo, useEffect } from "react";
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { SearchIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
 
 
 const getPlayers = async () => {
@@ -50,6 +52,7 @@ export default function Component() {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const playersPerPage = 10;
+    const router = useRouter();
 
     const [players, setPlayers] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
@@ -92,8 +95,11 @@ export default function Component() {
 
     const sortedPlayers = useMemo(() => {
         setCurrentPage(1);
+        setLoading(true);
+    
         let sortedPlayers = Array.isArray(players) ? [...players] : [];
     
+        // Sort players based on the selected criteria
         sortedPlayers.sort((playerA, playerB) => {
             const playerAValue = playerA[sortBy];
             const playerBValue = playerB[sortBy];
@@ -109,11 +115,13 @@ export default function Component() {
             return 0;
         });
     
+        // Filter players based on the search term
         if (searchTerm) {
             sortedPlayers = sortedPlayers.filter(player =>
-                player.name.toLowerCase().includes(searchTerm.toLowerCase())
+                player?.name?.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
+    
         setLoading(false);
         return sortedPlayers;
     }, [players, sortBy, sortOrder, searchTerm]);
@@ -143,7 +151,7 @@ export default function Component() {
     );
 
     return (
-        <div className="bg-background rounded-lg border p-4 md:p-6 w-full overflow-scroll">
+        <div className="bg-background rounded-lg border p-4 md:p-6 w-full overflow-scroll h-full">
             <div className="flex flex-col md:flex-row items-center justify-between mb-4 md:mb-6">
                 <h2 className="text-2xl font-bold">Leaderboard</h2>
                 <div className="flex items-center gap-2 mt-4 md:mt-0 z-10">
@@ -229,14 +237,14 @@ export default function Component() {
                             <TableRow key={player.id}>
                                 <TableCell>
                                     <div className="flex items-center gap-3">
-                                        <Avatar>
-                                            <AvatarImage src={player.avatar} className="w-12 h-12" alt="Avatar" />
+                                        <Avatar className="cursor-pointer" onClick={() => router.push(`/profile?id=${player.id}`)}>
+                                            <AvatarImage src={player.avatar} className="w-12 h-12 rounded-full" alt="Avatar" />
                                             <AvatarFallback>
                                                 {player.name}
                                             </AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <div className="font-medium">{player.name} || {player.id}</div>
+                                            <div className="font-medium">{player.name}</div>
                                         </div>
                                     </div>
                                 </TableCell>
@@ -249,22 +257,22 @@ export default function Component() {
                     </TableBody>
                 )}
             </Table>
-            <div className="flex flex-col md:flex-row items-center justify-between mt-4 md:mt-6">
+            <div className="flex flex-col md:flex-row items-center justify-between md:mt-6 mt-auto">
                 <div className="text-sm text-muted-foreground">
                     Showing {currentPlayers.length} of {sortedPlayers.length} players (Page {currentPage} of {Math.ceil(sortedPlayers.length / playersPerPage)})
                 </div>
                 <div className="flex items-center gap-2 mt-4 md:mt-0">
                 <Button variant="solid" onClick={handlePrevPage} disabled={currentPage === 1}>
-                    <ChevronLeftIcon className="w-5 h-5" />
+                    <ChevronLeftIcon className="w-5 h-5 cursor-pointer" />
 
                 </Button>
             <Button
-            
+                className="cursor-pointer p-4"
                 variant="solid"
                 onClick={handleNextPage}
                 disabled={currentPage >= Math.ceil(sortedPlayers.length / playersPerPage)}
             >
-                <ChevronRightIcon className="w-5 h-5" />
+                <ChevronRightIcon className="w-5 h-5 cursor-pointer" />
             </Button>
                 </div>
             </div>

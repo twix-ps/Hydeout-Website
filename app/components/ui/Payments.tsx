@@ -94,7 +94,7 @@ export default function PaymentsList({ paymentsData }: PaymentsProps) {
     }, [page]);
 
     return (
-        <div className="flex flex-col items-center min-h-screen h-screen overflow-scroll p-8">
+        <div className="flex flex-col items-center min-h-screen h-screen overflow-scroll p-8 border-[1px]">
         <h1 className="text-4xl font-extrabold mb-8 dark:text-white text-gray-800">Payments</h1>
         <div className="flex space-x-4 mb-8 items-center">
           <Button onClick={handlePrevPage} disabled={page === 1}>

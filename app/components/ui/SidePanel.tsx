@@ -15,6 +15,7 @@ import {
 import { signOut, useSession } from 'next-auth/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
+import { Sidebar } from 'lucide-react';
  
 interface SidebarButtonProps {
     name: string;
@@ -77,7 +78,7 @@ const sidebar = [
     { name: 'Payments', route: '?action=payments', icon: 'payments', tooltip: 'Payments' },
     { name: 'Gambling', route: '/gambling', icon: 'casino', tooltip: 'Gambling' },
     { name: 'Users', route: '/users', icon: 'people', tooltip: 'Users' },
-    { name: 'Leaderboards', route: '/leaderboards', icon: 'leaderboard', tooltip: 'Leaderboards' },
+    { name: 'Leaderboards', route: '?action=leaderboards', icon: 'leaderboard', tooltip: 'Leaderboards' },
     { name: 'Settings', route: '/settings', icon: 'settings', tooltip: 'Settings' },
     { name: 'Help', route: '/help', icon: 'help', tooltip: 'Help' },
 ]
@@ -86,6 +87,7 @@ const sidebar = [
 
 export default function SidePanel() {
   const { data: session } = useSession()
+  const [displayLeaderboard, setDisplayLeaderboard] = React.useState(false)
   const imageUrl = session?.user.image || ""
 
   return (
@@ -95,9 +97,11 @@ export default function SidePanel() {
 
       <div className="flex flex-col gap-2 items-center justify-between h-full">
         <span className='flex flex-col gap-2 items-center mt-12'>
-            {sidebar.map((item) => (
-                <SidebarButton key={item.name} name={item.name} route={item.route} icon={item.icon} tooltip={item.tooltip}/>
-            ))}
+
+          {sidebar.map((item) => (
+            <SidebarButton key={item.name} name={item.name} route={item.route} icon={item.icon} tooltip={item.tooltip} />
+          ))}
+          
         </span>
 
         <span className='flex flex-col gap-2 items-center'>

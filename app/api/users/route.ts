@@ -1,24 +1,42 @@
-// app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/firebaseAdmin';
 
-type User = {
+interface User {
   id: string;
+  name: string;
   avatar: string;
-  level: number;
+  robux: number;
   won: number;
   lost: number;
-  name: string;
+  level: number;
   xp: number;
-  robux: number;
-};
+}
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+
+  if (searchParams.has('id')) {
+    const id = searchParams.get('id');
+    if (id) {
+      try {
+        const userDoc = await db.collection('users').doc(id).get();
+        if (!userDoc.exists) {
+          return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+        const user = { id: userDoc.id, ...userDoc.data() } as User;
+        return NextResponse.json(user);
+      } catch (error) {
+        console.error('Error fetching user by ID:', error);
+        return NextResponse.json({ error: 'Error fetching user by ID' }, { status: 500 });
+      }
+    }
+  }
+
   try {
     const usersCollection = db.collection('users');
     const query = usersCollection.orderBy('xp', 'desc');
-
     const snapshot = await query.get();
+
     const users: User[] = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
@@ -26,6 +44,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(users);
   } catch (error) {
+    console.error('Error fetching users:', error);
     return NextResponse.json({ error: 'Error fetching users' }, { status: 500 });
   }
 }
