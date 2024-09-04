@@ -6,19 +6,24 @@ import {SessionProvider} from 'next-auth/react'
 import { useSearchParams } from "next/navigation";
 import Leaderboard from "./components/ui/Leaderboard";
 import LoadingPage from "./components/ui/LoadingPage";
+import NavBar from "./components/ui/NavBar";
 
 
 function Page() {
   const urlParams = useSearchParams();
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex flex-row">
-      <SidePanel 
-      />
-      {urlParams.get("action") == "payments" && (
-        <Payments pageNumber={0} amount={10} paymentsData={[]} />
-      )}
-      <Leaderboard />
+    <div className="w-screen h-screen overflow-hidden flex flex-col">
+      <NavBar />
+      <span className="flex flex-col sm:flex-row gap-4">
+        <SidePanel 
+        />
+        {urlParams.get("action") == "payments" && (
+          <Payments pageNumber={0} amount={10} paymentsData={[]} />
+        )}
+        <Leaderboard />
+      </span>
+
     </div>
   );
 }

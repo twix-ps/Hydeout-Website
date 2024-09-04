@@ -15,8 +15,7 @@ import {
 import { signOut, useSession } from 'next-auth/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@radix-ui/react-tooltip';
-import { Sidebar } from 'lucide-react';
- 
+
 interface SidebarButtonProps {
     name: string;
     route: string;
@@ -91,12 +90,12 @@ export default function SidePanel() {
   const imageUrl = session?.user.image || ""
 
   return (
-    <div className="flex flex-col p-4 bg-gray-50 dark:bg-gray-950 border-gray-100 dark:border-gray-900 border-[1px] w-max-[20%] h-screen w-[5%] items-center gap-2">
+    <div className="flex sm:flex-col items-center flex-row sm:p-4 p-2 bg-gray-50 dark:bg-gray-950 border-gray-100 dark:border-gray-900 border-[1px]  sm:w-max-[20%] sm:h-screen-[100%] h-min sm:items-center gap-2">
       <Profile />
       
 
-      <div className="flex flex-col gap-2 items-center justify-between h-full">
-        <span className='flex flex-col gap-2 items-center mt-12'>
+      <div className="flex sm:flex-col flex-row gap-2 items-center justify-between w-full">
+        <span className='flex sm:flex-col flex-row gap-2 items-center sm:mt-12'>
 
           {sidebar.map((item) => (
             <SidebarButton key={item.name} name={item.name} route={item.route} icon={item.icon} tooltip={item.tooltip} />

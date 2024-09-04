@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   const amount = parseInt(searchParams.get('amount') || '10');
   const pageNumber = parseInt(searchParams.get('page') || '1');
   const startIndex = (pageNumber - 1) * amount;
+  
 
   try {
     const paymentsRef = db.collection('payments').orderBy('time', 'desc');

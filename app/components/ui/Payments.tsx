@@ -125,7 +125,7 @@ function Payments({ payment }: { payment: Payment }) {
     const [showId, setShowId] = useState(false);
   
     return (
-      <div className="rounded-lg shadow-md">
+      <div className="rounded-lg shadow-md mt-auto">
 
         <Table className="border-2 rounded-lg">
           <TableBody>
