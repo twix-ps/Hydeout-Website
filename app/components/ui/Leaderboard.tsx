@@ -262,13 +262,13 @@ export default function Component() {
                     Showing {currentPlayers.length} of {sortedPlayers.length} players (Page {currentPage} of {Math.ceil(sortedPlayers.length / playersPerPage)})
                 </div>
                 <div className="flex items-center gap-2 mt-4 md:mt-0">
-                <Button variant="solid" onClick={handlePrevPage} disabled={currentPage === 1}>
+                <Button variant="outline" onClick={handlePrevPage} disabled={currentPage === 1}>
                     <ChevronLeftIcon className="w-5 h-5 cursor-pointer" />
 
                 </Button>
             <Button
                 className="cursor-pointer p-4"
-                variant="solid"
+                variant="outline"
                 onClick={handleNextPage}
                 disabled={currentPage >= Math.ceil(sortedPlayers.length / playersPerPage)}
             >
