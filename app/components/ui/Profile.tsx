@@ -16,7 +16,7 @@ export default function Profile() {
           onClick={() => window.location.href = "/profile"}
         >
           <AspectRatio ratio={1}>
-            <AvatarImage className="rounded-md" src={imageUrl} sizes="100%"/>
+            <AvatarImage className="rounded-md border-2" src={imageUrl} sizes="100%"/>
           </AspectRatio>
           <AvatarFallback>
             <span className="text-xl">{name}</span>
