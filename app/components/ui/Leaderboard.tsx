@@ -34,20 +34,19 @@ interface Player {
     id: number;
     name: string;
     avatar: string;
-    robux: number;
+    balance: number;
     won: number;
     lost: number;
     messages: number;
     level: number;
     xp: number;
-    totalWagered: number;
 }
 
 
 type SortOrder = "asc" | "desc";
 
 export default function Component() {
-    const [sortBy, setSortBy] = useState<keyof Player>("robux");
+    const [sortBy, setSortBy] = useState<keyof Player>("balance");
     const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -166,11 +165,11 @@ export default function Component() {
                             <DropdownMenuItem
                                 className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-muted dark:hover:bg-gray-800"
                                 onClick={() => {
-                                    setSortBy("robux")
+                                    setSortBy("balance")
                                     setSortOrder("desc")
                                 }}
                             >
-                                <span className="text-sm">Sort by Robux</span>
+                                <span className="text-sm">Sort by Balance</span>
                                 <ChevronRightIcon className="w-4 h-4 text-muted-foreground" />
                             </DropdownMenuItem>
                             <Separator className="my-1" />
@@ -181,7 +180,7 @@ export default function Component() {
                                     setSortOrder("desc")
                                 }}
                             >
-                                <span className="text-sm">Sort by Robux Won</span>
+                                <span className="text-sm">Sort by Profit</span>
                                 <ChevronRightIcon className="w-4 h-4 text-muted-foreground" />
                             </DropdownMenuItem>
                             <Separator className="my-1" />
@@ -225,8 +224,8 @@ export default function Component() {
                 <TableHeader>
                     <TableRow>
                         <TableHead>Player</TableHead>
-                        <TableHead className="text-right">Robux</TableHead>
-                        <TableHead className="text-right">Profit Gambling</TableHead>
+                        <TableHead className="text-right">Balance</TableHead>
+                        <TableHead className="text-right">Profit</TableHead>
                         <TableHead className="text-right">Level</TableHead>
                         <TableHead className="text-right">XP</TableHead>
                     </TableRow>
@@ -248,7 +247,7 @@ export default function Component() {
                                         </div>
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-right">{player.robux}</TableCell>
+                                <TableCell className="text-right">{player.balance}</TableCell>
                                 <TableCell className="text-right">{player.won}</TableCell>
                                 <TableCell className="text-right">{player.level || 0}</TableCell>
                                 <TableCell className="text-right">{player.xp}</TableCell>

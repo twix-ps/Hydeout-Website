@@ -144,7 +144,7 @@ function Payments({ payment }: { payment: Payment }) {
             </TableRow>
             <TableRow>
               <TableCell className="font-bold">Amount</TableCell>
-              <TableCell>{payment.amount.toLocaleString()} Robux</TableCell>
+              <TableCell>{payment.amount.toLocaleString()} Coins</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-bold">Time</TableCell>

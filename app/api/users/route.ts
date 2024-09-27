@@ -5,7 +5,7 @@ interface User {
   id: string;
   name: string;
   avatar: string;
-  robux: number;
+  balance: number;
   won: number;
   lost: number;
   level: number;
