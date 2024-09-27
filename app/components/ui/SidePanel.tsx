@@ -75,7 +75,6 @@ export function ModeToggle() {
 const sidebar = [
 
     { name: 'Payments', route: '?action=payments', icon: 'payments', tooltip: 'Payments' },
-    { name: 'Gambling', route: '/gambling', icon: 'casino', tooltip: 'Gambling' },
     { name: 'Users', route: '/users', icon: 'people', tooltip: 'Users' },
     { name: 'Leaderboards', route: '?action=leaderboards', icon: 'leaderboard', tooltip: 'Leaderboards' },
     { name: 'Settings', route: '/settings', icon: 'settings', tooltip: 'Settings' },

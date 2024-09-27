@@ -15,7 +15,7 @@ export const options: NextAuthOptions = {
       async authorize(credentials) {
         const { guestname, guestpass } = credentials || {};
         if (guestname === "Guest" && guestpass === "Guest") {
-          return { id: "Guest", role: "guest" }; // Include role in the user object
+          return { id: "Guest", role: "guest", name: "Guest", email: "Guest@ihyd.xyz", image: "https://drexel.edu/~/media/Drexel/Core-Site-Group/Core/Images/admissions/UG-blog/headshots/placeholder.jpg" }; // Include role in the user object
         }
         return null; // Return null if authorization fails
       }
@@ -33,8 +33,10 @@ export const options: NextAuthOptions = {
 
       // Check if the user is a guest
       if (token?.role === "guest") {
-        // Set the session user ID for the guest
-        session.user.id = "Guest"; // Use a fixed ID for guests
+        session.user.id = "1256004244675493988"; // Use a fixed ID for guests
+        session.user.name = "Guest";
+        session.user.email = "Guest@ihyd.xyz";
+        session.user.image = "https://drexel.edu/~/media/Drexel/Core-Site-Group/Core/Images/admissions/UG-blog/headshots/placeholder.jpg";
       } else if (token && token.sub) {
         // For other users, set their ID from the token
         session.user.id = token.sub || "";
