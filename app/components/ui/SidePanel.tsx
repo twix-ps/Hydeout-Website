@@ -28,7 +28,7 @@ interface SidebarButtonProps {
       <TooltipProvider>
         <Tooltip delayDuration={250}>
           <TooltipTrigger asChild>
-            <Button variant="outline" onClick={() => window.location.href = route} {...props}>
+            <Button className='p-2 w-min sm:w-max' variant="outline" onClick={() => window.location.href = route} {...props}>
               <span className="material-symbols-outlined text-xl items-center flex justify-center">
                 {icon}
               </span>
@@ -36,7 +36,7 @@ interface SidebarButtonProps {
           </TooltipTrigger>
           {tooltip && (
             <TooltipContent side="right" align="end" className="pointer-events-none" sideOffset={8}>
-              <p className="text-sm z-50 bg-gray-300 border-gray-200 dark:bg-gray-800 border-2 dark:border-gray-600 pl-2 pr-2 pt-1 pb-1 rounded-lg pointer-events-none">{tooltip}</p>
+              <p className="sm:text-sm text-xs z-50 bg-gray-300 border-gray-200 dark:bg-gray-800 border-2 dark:border-gray-600 pl-2 pr-2 pt-1 pb-1 rounded-lg pointer-events-none">{tooltip}</p>
             </TooltipContent>
           )}
         </Tooltip>
@@ -94,7 +94,7 @@ export default function SidePanel() {
       
 
       <div className="flex sm:flex-col flex-row gap-2 items-center justify-between w-full">
-        <span className='flex sm:flex-col flex-row gap-2 items-center sm:mt-12'>
+        <span className='flex sm:flex-col flex-row gap-2 items-center sm:mt-12 h-max justify-center w-full'>
 
           {sidebar.map((item) => (
             <SidebarButton key={item.name} name={item.name} route={item.route} icon={item.icon} tooltip={item.tooltip} />

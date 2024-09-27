@@ -17,6 +17,13 @@ export async function GET(req: NextRequest) {
   const amount = parseInt(searchParams.get('amount') || '10');
   const pageNumber = parseInt(searchParams.get('page') || '1');
   const startIndex = (pageNumber - 1) * amount;
+
+  const allowedOrigins = ['localhost:3000', 'ihyd.xyz'];
+  console.log(req.headers.get('host') || '');
+
+  if (!allowedOrigins.includes(req.headers.get('host') || '')) {
+    return NextResponse.json({ error: 'Invalid origin' }, { status: 400 });
+  }
   
 
   try {

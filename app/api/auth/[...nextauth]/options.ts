@@ -17,7 +17,7 @@ export const options: NextAuthOptions = {
         if (guestname === "Guest" && guestpass === "Guest") {
           return { id: "Guest", role: "guest", name: "Guest", email: "Guest@ihyd.xyz", image: "https://drexel.edu/~/media/Drexel/Core-Site-Group/Core/Images/admissions/UG-blog/headshots/placeholder.jpg" }; // Include role in the user object
         }
-        return null; // Return null if authorization fails
+        return null;
       }
     }),
     
@@ -29,22 +29,17 @@ export const options: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, token }) {
-      console.log("Session Callback:", { session, token }); // Log session and token
-
-      // Check if the user is a guest
       if (token?.role === "guest") {
         session.user.id = "1256004244675493988"; // Use a fixed ID for guests
         session.user.name = "Guest";
         session.user.email = "Guest@ihyd.xyz";
         session.user.image = "https://drexel.edu/~/media/Drexel/Core-Site-Group/Core/Images/admissions/UG-blog/headshots/placeholder.jpg";
       } else if (token && token.sub) {
-        // For other users, set their ID from the token
         session.user.id = token.sub || "";
       }
       return session;
     },
     async redirect({ url, baseUrl }) {
-      console.log("Redirect Callback:", { url, baseUrl }); // Log URL and base URL
       return url.startsWith(baseUrl) ? url : baseUrl;
     }
   },

@@ -150,7 +150,7 @@ export default function Component() {
     );
 
     return (
-        <div className="bg-background rounded-lg border p-4 md:p-6 w-full overflow-scroll h-full">
+        <div className="bg-background rounded-lg border p-4 md:p-6 w-full overflow-scroll h-screen">
             <div className="flex flex-col md:flex-row items-center justify-between mb-4 md:mb-6">
                 <h2 className="text-2xl font-bold">Leaderboard</h2>
                 <div className="flex items-center gap-2 mt-4 md:mt-0 z-10">

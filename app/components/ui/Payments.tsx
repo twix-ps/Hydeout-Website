@@ -90,7 +90,6 @@ export default function PaymentsList({ paymentsData }: PaymentsProps) {
 
     useEffect(() => {
       handleFetchPayments(page);
-      console.log(payments);
     }, [page]);
 
     return (

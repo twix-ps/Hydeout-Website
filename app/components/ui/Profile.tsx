@@ -1,3 +1,4 @@
+import { AspectRatio } from "@radix-ui/react-aspect-ratio"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { DiscordLogoIcon } from "@radix-ui/react-icons"
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@radix-ui/react-tooltip"
@@ -11,10 +12,12 @@ export default function Profile() {
     if (session) {
       return (
         <Avatar
-          className="p-2 border-2 flex rounded-md dark:hover:bg-gray-800 hover:bg-gray-100 hover:cursor-pointer dark:hover:cursor-pointer w-[58px] h-[58px]" 
+          className="dark:hover:bg-gray-800 hover:bg-gray-100 hover:cursor-pointer dark:hover:cursor-pointer w-[58px] h-[58px]" 
           onClick={() => window.location.href = "/profile"}
         >
-          <AvatarImage src={imageUrl} />
+          <AspectRatio ratio={1}>
+            <AvatarImage className="rounded-md" src={imageUrl} sizes="100%"/>
+          </AspectRatio>
           <AvatarFallback>
             <span className="text-xl">{name}</span>
           </AvatarFallback>
