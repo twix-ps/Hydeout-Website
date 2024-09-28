@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   const pageNumber = parseInt(searchParams.get('page') || '1');
   const startIndex = (pageNumber - 1) * amount;
 
-  const allowedOrigins = ['localhost:3000', 'ihyd.xyz'];
+  const allowedOrigins = ['localhost:3000', 'ihyd.xyz', 'www.ihyd.xyz'];
   console.log(req.headers.get('host') || '');
 
   if (!allowedOrigins.includes(req.headers.get('host') || '')) {
