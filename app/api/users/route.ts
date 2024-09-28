@@ -14,7 +14,7 @@ interface User {
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const allowedOrigins = ['localhost:3000', 'ihyd.xyz', 'www.ihyd.xyz'];
+  const allowedOrigins = ['localhost:3000', 'ihyd.xyz'];
   console.log(req.headers.get('host') || '');
 
   if (!allowedOrigins.includes(req.headers.get('host') || '')) {
