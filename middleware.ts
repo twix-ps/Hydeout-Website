@@ -33,37 +33,37 @@ export default async function middleware(req: NextRequest) {
         delete rateLimit[ip];
         }
     });    
-    if (apiPaths.includes(req.nextUrl.pathname)) {
-        const csrfToken = req.cookies.get('next-auth.csrf-token');
-        if (!csrfToken && req.nextUrl.pathname.startsWith('/api')) {
-            const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
+    // if (apiPaths.includes(req.nextUrl.pathname)) {
+    //     const csrfToken = req.cookies.get('next-auth.csrf-token');
+    //     if (!csrfToken && req.nextUrl.pathname.startsWith('/api')) {
+    //         const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
 
-            // Set security headers
-            response.headers.set('X-Frame-Options', 'DENY');
-            response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    //         // Set security headers
+    //         response.headers.set('X-Frame-Options', 'DENY');
+    //         response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
     
-            return response;
+    //         return response;
 
-        }
+    //     }
 
-        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-        if (!token) {
-            const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
+    //     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    //     if (!token) {
+    //         const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
 
-            // Set security headers
-            response.headers.set('X-Frame-Options', 'DENY');
-            response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    //         // Set security headers
+    //         response.headers.set('X-Frame-Options', 'DENY');
+    //         response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
     
-            return response;
-        }
-        const response = NextResponse.next();
+    //         return response;
+    //     }
+    //     const response = NextResponse.next();
 
-        response.headers.set('X-Frame-Options', 'DENY');
-        response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    //     response.headers.set('X-Frame-Options', 'DENY');
+    //     response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
     
-        return response;
+    //     return response;
 
-    }
+    // }
 
     const response = NextResponse.next();
     response.headers.set('X-Frame-Options', 'DENY');
