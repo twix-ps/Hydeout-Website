@@ -18,8 +18,8 @@ export default async function middleware(req: NextRequest) {
 
       if (elapsed < 60000) { // If within 1 minute
         rateLimit[ip].count++;
-        if (rateLimit[ip].count > 100) {
-            return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+        if (rateLimit[ip].count > 250) {
+            return NextResponse.json({ error: 'Too many requests, please try again later' }, { status: 429 });
             }
         } else {
         // Reset count if more than 1 minute has passed
@@ -36,16 +36,31 @@ export default async function middleware(req: NextRequest) {
     if (apiPaths.includes(req.nextUrl.pathname)) {
         const csrfToken = req.cookies.get('next-auth.csrf-token');
         if (!csrfToken && req.nextUrl.pathname.startsWith('/api')) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            const response = NextResponse.redirect(new URL('/login', req.url));
+
+            // Set security headers
+            response.headers.set('X-Frame-Options', 'DENY');
+            response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    
+            return response;
+
         }
 
         const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
         if (!token) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            const response = NextResponse.redirect(new URL('/login', req.url));
+
+            // Set security headers
+            response.headers.set('X-Frame-Options', 'DENY');
+            response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    
+            return response;
         }
         const response = NextResponse.next();
+
         response.headers.set('X-Frame-Options', 'DENY');
         response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    
         return response;
 
     }
