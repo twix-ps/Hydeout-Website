@@ -36,7 +36,7 @@ export default async function middleware(req: NextRequest) {
     if (apiPaths.includes(req.nextUrl.pathname)) {
         const csrfToken = req.cookies.get('next-auth.csrf-token');
         if (!csrfToken && req.nextUrl.pathname.startsWith('/api')) {
-            const response = NextResponse.redirect(new URL('/login', req.url));
+            const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
 
             // Set security headers
             response.headers.set('X-Frame-Options', 'DENY');
@@ -48,7 +48,7 @@ export default async function middleware(req: NextRequest) {
 
         const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
         if (!token) {
-            const response = NextResponse.redirect(new URL('/login', req.url));
+            const response = NextResponse.redirect(new URL('/api/auth/signin', req.url));
 
             // Set security headers
             response.headers.set('X-Frame-Options', 'DENY');
