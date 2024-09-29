@@ -9,6 +9,11 @@ let rateLimit: { [key: string]: { count: number, lastRequest: number } } = {};
 export default async function middleware(req: NextRequest) {
     const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
     const now = Date.now();
+    const session = await getToken({ req });
+
+    if (!session && !apiPaths.includes(req.nextUrl.pathname) && !req.nextUrl.pathname.startsWith('/api/auth')) {
+        return NextResponse.redirect(new URL('/api/auth/signin', req.url));
+    } 
 
     if (!rateLimit[ip]) {
         rateLimit[ip] = { count: 1, lastRequest: now };

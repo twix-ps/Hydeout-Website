@@ -2,11 +2,12 @@
 import {Suspense} from "react";
 import Payments from "./components/ui/Payments";
 import SidePanel from "./components/ui/SidePanel";
-import {SessionProvider} from 'next-auth/react'
+import {SessionProvider, signIn, useSession} from 'next-auth/react'
 import { useSearchParams } from "next/navigation";
 import Leaderboard from "./components/ui/Leaderboard";
 import LoadingPage from "./components/ui/LoadingPage";
 import NavBar from "./components/ui/NavBar";
+import { sign } from "crypto";
 
 
 function Page() {
