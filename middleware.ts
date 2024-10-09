@@ -11,6 +11,10 @@ export default async function middleware(req: NextRequest) {
     const now = Date.now();
     const session = await getToken({ req });
 
+    if (req.nextUrl.pathname.startsWith('/api/side')) {
+        return NextResponse.next();
+    }
+
     if (!session && !apiPaths.includes(req.nextUrl.pathname) && !req.nextUrl.pathname.startsWith('/api/auth')) {
         return NextResponse.redirect(new URL('/api/auth/signin', req.url));
     } 
